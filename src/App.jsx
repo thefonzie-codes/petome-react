@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import useApplicationData from './hooks/useApplicationData';
+import { getById } from './hooks/helpers';
 
 function App() {
   const {state, dispatch, ACTIONS} = useApplicationData();
@@ -10,14 +11,20 @@ function App() {
     user,
     day,
     energy,
-    pets, 
+    pets,
+    events,
     } = state;
 
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>Event: {event}</p> <button onClick={() => dispatch({type: ACTIONS.SET_EVENT_DATA, value: event + 1})}>Click Me</button>
+        <p>Event: {event}</p>
+          <button onClick={() => dispatch({type: ACTIONS.SET_EVENT_DATA, value: event + 1})}>Next</button>
+          <button onClick={() => dispatch({type: ACTIONS.SET_EVENT_DATA, value: 2})}>Click Me</button>
+          <p>{getById(event, events).dialogue}</p>
+          <button onClick={() => dispatch({type: ACTIONS.SET_EVENT_DATA, value: getById(event, events).options[0].nextEvent})}>{getById(event, events).options[0].text}</button>
+          <button onClick={() => dispatch({type: ACTIONS.SET_EVENT_DATA, value: getById(event, events).options[1].nextEvent})}>{getById(event, events).options[1].text}</button>
         <p>User: {user}</p>
         <p>Day: {day}</p>
         <p>Energy: {energy}</p>
